@@ -13,7 +13,7 @@ export const shelfConfigs = {
     },
     B: {
         sections: {
-            2: { label: 'CODING PROJECTS', items: ['audiobookmarks', 'aitools', 'gdrivesync', 'xldefgen'] },
+            2: { label: 'CODING PROJECTS', items: ['audiobookmarks', 'aitools', 'gdrivesync', 'xldefgen', 'macromap', 'farsicheatsheets'] },
             4: { label: 'SKILLS', items: ['skillsA', 'skillsB', 'skillsC', 'skillsD'] },
         }
     },
@@ -373,6 +373,40 @@ export const bookConfigs = {
                     'Turns a small multilingual mT5 into a language-agnostic definition generator.',
                     'Produces English definitions for foreign-language terms with no bilingual training data.',
                     "Master's research project; the full paper is included in the repo."
+                ]
+            }
+        },
+        macromap: {
+            id: 'macromap',
+            color: colors.purple,
+            content: 'Macro Map',
+            modalInfo: {
+                kind: 'project',
+                tagline: 'Find foods that fit your remaining macros',
+                tech: 'JavaScript · Python · USDA FoodData Central',
+                siteUrl: 'https://brandonwilde.github.io/macro-map/',
+                repoUrl: 'https://github.com/brandonwilde/macro-map',
+                highlights: [
+                    'Plots foods on a protein / carbs / fat triangle to show what fits your remaining targets.',
+                    'Picks amounts of two or three foods that together hit a target.',
+                    'Supports custom foods loaded from JSON.'
+                ]
+            }
+        },
+        farsicheatsheets: {
+            id: 'farsicheatsheets',
+            color: colors.yellow,
+            content: 'Farsi Cheat Sheets',
+            modalInfo: {
+                kind: 'project',
+                tagline: 'Reference charts for spoken Tehrani Persian',
+                tech: 'HTML · CSS · headless Chrome',
+                siteUrl: 'https://brandonwilde.github.io/farsi-cheat-sheets/',
+                repoUrl: 'https://github.com/brandonwilde/farsi-cheat-sheets',
+                highlights: [
+                    'Verb conjugation charts, vocabulary, and quick-reference sheets for colloquial Tehrani speech.',
+                    'Notes the formal written form alongside each spoken one.',
+                    'Printable PDF versions of every sheet.'
                 ]
             }
         },

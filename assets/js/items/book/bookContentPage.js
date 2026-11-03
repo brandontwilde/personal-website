@@ -169,30 +169,52 @@ export function composeContentItems(book, ctx, { textWidthPx, marginXpx, typeSca
         }});
     };
 
-    // Draws the "Go to Repo" button and records its hotspot for the link overlay.
-    const repoButton = (url) => {
-        if (!url) return;
-        const label = 'Go to Repo  →';
+    // Draws pill link buttons — side by side when they fit, else stacked — and records
+    // their hotspots for the link overlay. The first is filled; any others are outlined.
+    const linkButtons = (links) => {
+        links = links.filter(l => l.url);
+        if (!links.length) return;
+        const font  = `bold ${bodyPx}px Georgia, serif`;
         const padX  = bodyPx * 1.1;
         const btnH  = bodyPx * 1.9;
+        const btnGap = bodyPx * 0.8;
+        const maxW  = W - marginXpx * 2;
+        ctx.font = font;
+        const widths = links.map(l => Math.min(ctx.measureText(l.label).width + padX * 2, maxW));
+        const rowW = widths.reduce((a, b) => a + b, 0) + btnGap * (links.length - 1);
+        const inRow = rowW <= maxW;
+        const blockH = inRow ? btnH : btnH * links.length + btnGap * (links.length - 1);
+
         gap(bodyPx * 0.9);
-        items.push({ advance: btnH, draw: (c, y) => {
-            c.font = `bold ${bodyPx}px Georgia, serif`;
-            const btnW = Math.min(c.measureText(label).width + padX * 2, W - marginXpx * 2);
-            const x0 = (W - btnW) / 2, x1 = x0 + btnW, y1 = y + btnH;
-            const r  = btnH / 2;
-            c.beginPath();
-            c.moveTo(x0 + r, y);
-            c.arcTo(x1, y, x1, y1, r);
-            c.arcTo(x1, y1, x0, y1, r);
-            c.arcTo(x0, y1, x0, y, r);
-            c.arcTo(x0, y, x1, y, r);
-            c.closePath();
-            c.fillStyle = accent; c.fill();
-            c.fillStyle = '#f8f4ec';
+        items.push({ advance: blockH, draw: (c, yTop) => {
+            c.font = font;
             c.textAlign = 'center'; c.textBaseline = 'middle';
-            c.fillText(label, W / 2, y + btnH / 2 + 1);
-            book._linkHotspots = [{ url, x0, y0: y, x1, y1 }];
+            book._linkHotspots = [];
+            let x = (W - rowW) / 2;
+            links.forEach(({ label, url }, i) => {
+                const btnW = widths[i];
+                const x0 = inRow ? x : (W - btnW) / 2;
+                const y  = inRow ? yTop : yTop + i * (btnH + btnGap);
+                const x1 = x0 + btnW, y1 = y + btnH;
+                const r  = btnH / 2;
+                c.beginPath();
+                c.moveTo(x0 + r, y);
+                c.arcTo(x1, y, x1, y1, r);
+                c.arcTo(x1, y1, x0, y1, r);
+                c.arcTo(x0, y1, x0, y, r);
+                c.arcTo(x0, y, x1, y, r);
+                c.closePath();
+                if (i === 0) {
+                    c.fillStyle = accent; c.fill();
+                    c.fillStyle = '#f8f4ec';
+                } else {
+                    c.strokeStyle = accent; c.lineWidth = bodyPx * 0.12; c.stroke();
+                    c.fillStyle = accent;
+                }
+                c.fillText(label, (x0 + x1) / 2, y + btnH / 2 + 1);
+                book._linkHotspots.push({ url, x0, y0: y, x1, y1 });
+                x += btnW + btnGap;
+            });
         }});
     };
 
@@ -330,7 +352,10 @@ export function composeContentItems(book, ctx, { textWidthPx, marginXpx, typeSca
     } else if (info.kind === 'project') {
         header(info.tagline, info.tech);
         bulletList('Highlights', info.highlights ?? []);
-        repoButton(info.repoUrl);
+        linkButtons([
+            { label: 'Open Site  →',  url: info.siteUrl },
+            { label: 'Go to Repo  →', url: info.repoUrl },
+        ]);
 
     } else if (info.kind === 'skills') {
         header('', '', info.title);   // title falls back to spine content (e.g. Languages → زبان‌ها)
