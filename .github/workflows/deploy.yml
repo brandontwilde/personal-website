@@ -1,0 +1,25 @@
+name: Deploy site
+on:
+  push:
+    branches: [master]
+
+concurrency: gh-pages-master
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect site files
+        run: |
+          rsync -a --exclude .git --exclude .github --exclude .claude --exclude serve.py --exclude TODO.md ./ "$RUNNER_TEMP/site/"
+          touch "$RUNNER_TEMP/site/.nojekyll"
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ${{ runner.temp }}/site
+          branch: gh-pages
+          clean-exclude: pr-preview # leave open PR previews in place
+          force: false
