@@ -309,7 +309,7 @@ export const bookConfigs = {
         }
     },
 
-    // Project books — public GitHub repos (github.com/brandonwilde). Like the
+    // Project books — public GitHub repos (github.com/brandontwilde). Like the
     // education/experience books, these carry modalInfo, so they're auto-sized
     // from their content and the kind:'project' page renders their details.
     projects: {
@@ -321,7 +321,7 @@ export const bookConfigs = {
                 kind: 'project',
                 tagline: 'Turn audiobook bookmarks into searchable notes',
                 tech: 'Python · Playwright · OpenAI Whisper',
-                repoUrl: 'https://github.com/brandonwilde/audiobookmarks',
+                repoUrl: 'https://github.com/brandontwilde/audiobookmarks',
                 highlights: [
                     'Drives Libby and Hoopla in the browser to capture the audio around each bookmark.',
                     'Transcribes the snippets with Whisper and selects the most relevant quote.',
@@ -337,7 +337,7 @@ export const bookConfigs = {
                 kind: 'project',
                 tagline: 'A unified toolkit for everyday AI tasks',
                 tech: 'Python · OpenAI · Anthropic · Google · Azure',
-                repoUrl: 'https://github.com/brandonwilde/ai-tools',
+                repoUrl: 'https://github.com/brandontwilde/ai-tools',
                 highlights: [
                     'One interface for LLM prompting and chat across multiple providers.',
                     'Bundled tools for translation, image analysis and generation, transcription, and OCR.',
@@ -353,7 +353,7 @@ export const bookConfigs = {
                 kind: 'project',
                 tagline: 'Keep a local folder in sync with Google Drive',
                 tech: 'Bash · rclone · systemd',
-                repoUrl: 'https://github.com/brandonwilde/gdrive-sync',
+                repoUrl: 'https://github.com/brandontwilde/gdrive-sync',
                 highlights: [
                     'Mirrors a local directory to Google Drive via rclone whenever it changes.',
                     'Installs as a background systemd service with configurable sync delays.'
@@ -368,7 +368,7 @@ export const bookConfigs = {
                 kind: 'project',
                 tagline: 'Zero-shot cross-lingual definition generation',
                 tech: 'Python · PyTorch · mT5 · Hugging Face',
-                repoUrl: 'https://github.com/brandonwilde/XLdefgen',
+                repoUrl: 'https://github.com/brandontwilde/XLdefgen',
                 highlights: [
                     'Turns a small multilingual mT5 into a language-agnostic definition generator.',
                     'Produces English definitions for foreign-language terms with no bilingual training data.',
@@ -384,8 +384,8 @@ export const bookConfigs = {
                 kind: 'project',
                 tagline: 'Find foods that fit your remaining macros',
                 tech: 'JavaScript · Python · USDA FoodData Central',
-                siteUrl: 'https://brandonwilde.github.io/macro-map/',
-                repoUrl: 'https://github.com/brandonwilde/macro-map',
+                siteUrl: 'https://brandontwilde.github.io/macro-map/',
+                repoUrl: 'https://github.com/brandontwilde/macro-map',
                 highlights: [
                     'Plots foods on a protein / carbs / fat triangle to show what fits your remaining targets.',
                     'Picks amounts of two or three foods that together hit a target.',
@@ -401,8 +401,8 @@ export const bookConfigs = {
                 kind: 'project',
                 tagline: 'Reference charts for spoken Tehrani Persian',
                 tech: 'HTML · CSS · headless Chrome',
-                siteUrl: 'https://brandonwilde.github.io/farsi-cheat-sheets/',
-                repoUrl: 'https://github.com/brandonwilde/farsi-cheat-sheets',
+                siteUrl: 'https://brandontwilde.github.io/farsi-cheat-sheets/',
+                repoUrl: 'https://github.com/brandontwilde/farsi-cheat-sheets',
                 highlights: [
                     'Verb conjugation charts, vocabulary, and quick-reference sheets for colloquial Tehrani speech.',
                     'Notes the formal written form alongside each spoken one.',
@@ -451,8 +451,8 @@ export const bookConfigs = {
                 emailSrc: "assets/images/email.png",
                 linkedinUrl: "https://www.linkedin.com/in/brandon-wilde3/",
                 linkedinText: "https://www.linkedin.com/in/brandon-wilde3/",
-                githubUrl: "https://www.github.com/brandonwilde",
-                githubText: "https://www.github.com/brandonwilde"
+                githubUrl: "https://www.github.com/brandontwilde",
+                githubText: "https://www.github.com/brandontwilde"
             }
         }
     }
