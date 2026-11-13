@@ -1,6 +1,6 @@
 import { LINK_CONFIRM } from '../config/constants.js';
 
-const canHover = () => window.matchMedia?.('(hover: hover)').matches ?? true;
+export const canHover = () => window.matchMedia?.('(hover: hover)').matches ?? true;
 
 // A link needs confirming when the click can't have shown a URL preview first:
 // a touch or pen tap, or (when the event doesn't say) a device with no hover.

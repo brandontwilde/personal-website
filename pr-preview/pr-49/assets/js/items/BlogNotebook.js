@@ -2,18 +2,19 @@ import * as THREE from 'three';
 import { BOOK_DEFAULTS, BLOG_NOTEBOOK_DEFAULTS } from '../config/constants.js';
 import { forwardCameraEvents } from '../utils/LinkOverlay.js';
 import { InteractiveItem } from './InteractiveItem.js';
-import { confirmLink, needsLinkConfirm } from '../ui/linkConfirm.js';
+import { canHover, confirmLink, needsLinkConfirm } from '../ui/linkConfirm.js';
 
 // A spiral-bound notebook representing the blog link.
 // Sits on the shelf leaning at an angle rather than spine-out like books.
-// Hovering shows the native browser URL preview via an invisible <a> overlay.
+// Hovering shows a label naming the site, plus the native URL preview via an invisible <a> overlay.
 export class BlogNotebook extends InteractiveItem {
-    constructor(id, { color, link, linkPrompt }) {
+    constructor(id, { color, link, linkPrompt, hoverLabel }) {
         super();
         this.bookId = id;
         this.color  = color ?? [77, 98, 89];
         this.link   = link  ?? null;
         this.linkPrompt = linkPrompt;
+        this.hoverLabel = hoverLabel;
 
         this.dimensions = {
             width:     BLOG_NOTEBOOK_DEFAULTS.WIDTH,
@@ -231,9 +232,31 @@ export class BlogNotebook extends InteractiveItem {
         });
 
         this._overlayEl.appendChild(a);
+        // A tap can't hover, so the label would only flash up beside the confirm prompt.
+        if (this.hoverLabel && canHover()) this._overlayEl.appendChild(this._buildLabel());
         this._overlayEl.style.display = 'block';
         window.addEventListener('resize', this._overlayResize);
         this._startOverlayLoop();
+    }
+
+    _buildLabel() {
+        const D = BLOG_NOTEBOOK_DEFAULTS;
+        const label = document.createElement('div');
+        label.style.cssText = [
+            'position:absolute', 'pointer-events:none', 'white-space:nowrap',
+            `background:${D.LABEL_BG}`, `color:${D.LABEL_TEXT}`,
+            'padding:5px 10px', 'border-radius:8px',
+            'font:13px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
+            'box-shadow:0 4px 14px rgba(0,0,0,0.4)', 'backdrop-filter:blur(5px)',
+            'opacity:0', `transition:opacity ${D.HOVER_DURATION}s ease`,
+        ].join(';');
+        label.textContent = this.hoverLabel + ' ';
+        const arrow = document.createElement('span');
+        arrow.textContent = '↗';
+        arrow.style.cssText = `color:${D.LABEL_ACCENT};font-weight:600;`;
+        label.appendChild(arrow);
+        requestAnimationFrame(() => { label.style.opacity = '1'; });
+        return label;
     }
 
     // rAF loop — keeps overlay aligned while the user orbits during hover.
@@ -278,6 +301,15 @@ export class BlogNotebook extends InteractiveItem {
         a.style.top    = `${minY}px`;
         a.style.width  = `${maxX - minX}px`;
         a.style.height = `${maxY - minY}px`;
+
+        // Centered above the notebook, or below it when there's no room above.
+        const label = this._overlayEl.children[1];
+        if (!label) return;
+        const gap = BLOG_NOTEBOOK_DEFAULTS.LABEL_GAP_PX;
+        const above = minY - gap - label.offsetHeight >= viewport.top;
+        label.style.left      = `${(minX + maxX) / 2}px`;
+        label.style.top       = `${above ? minY - gap : maxY + gap}px`;
+        label.style.transform = `translate(-50%, ${above ? '-100%' : '0'})`;
     }
 
     _hideOverlay() {
