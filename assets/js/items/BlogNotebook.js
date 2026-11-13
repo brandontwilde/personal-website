@@ -2,16 +2,18 @@ import * as THREE from 'three';
 import { BOOK_DEFAULTS, BLOG_NOTEBOOK_DEFAULTS } from '../config/constants.js';
 import { forwardCameraEvents } from '../utils/LinkOverlay.js';
 import { InteractiveItem } from './InteractiveItem.js';
+import { confirmLink, needsLinkConfirm } from '../ui/linkConfirm.js';
 
 // A spiral-bound notebook representing the blog link.
 // Sits on the shelf leaning at an angle rather than spine-out like books.
 // Hovering shows the native browser URL preview via an invisible <a> overlay.
 export class BlogNotebook extends InteractiveItem {
-    constructor(id, { color, link }) {
+    constructor(id, { color, link, linkPrompt }) {
         super();
         this.bookId = id;
         this.color  = color ?? [77, 98, 89];
         this.link   = link  ?? null;
+        this.linkPrompt = linkPrompt;
 
         this.dimensions = {
             width:     BLOG_NOTEBOOK_DEFAULTS.WIDTH,
@@ -221,6 +223,12 @@ export class BlogNotebook extends InteractiveItem {
         });
 
         forwardCameraEvents(a, this._renderer.domElement);
+        // Runs after the drag check above, so a camera drag is never taken for a tap.
+        a.addEventListener('click', e => {
+            if (e.defaultPrevented || !needsLinkConfirm(e)) return;
+            e.preventDefault();
+            confirmLink(this.link, this.linkPrompt);
+        });
 
         this._overlayEl.appendChild(a);
         this._overlayEl.style.display = 'block';

@@ -208,8 +208,9 @@ export class BookshelfScene {
         this.sceneManager.add(notebook);
         this.interactionManager.registerItem('blog', notebook, {
             title: 'Blog',
-            link:  config.link ?? null,
-            color: config.color,
+            link:       config.link ?? null,
+            linkPrompt: config.linkPrompt,
+            color:      config.color,
         });
         this.items.set('blog', { object: notebook });
     }

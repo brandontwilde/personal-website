@@ -232,6 +232,15 @@ export const NAV_HINTS = {
   ACCENT:      '#f0c060', // highlighted mouse button + key terms
 };
 
+// Prompt shown before an outbound link opens on a touch device
+export const LINK_CONFIRM = {
+  BACKDROP: 'rgba(0,0,0,0.35)',
+  BG:       'rgba(15,15,20,0.88)',
+  BG_SOLID: '#0f0f14', // Go button label
+  TEXT:     '#e8e4dc',
+  ACCENT:   '#f0c060', // Go button fill
+};
+
 // Camera settings
 export const CAMERA_SETTINGS = {
   FOV:  10,
