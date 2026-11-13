@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { INTERACTION } from '../config/constants.js';
+import { confirmLink, needsLinkConfirm } from '../ui/linkConfirm.js';
 
 export class InteractionManager {
     constructor(camera, renderer, { onOpen, onShowcased, onCloseStart } = {}) {
@@ -170,9 +171,11 @@ export class InteractionManager {
 
         // kind === 'closed'
         if (item.link) {
-            // Open immediately (must be synchronous with the click to avoid popup blockers).
+            // A tap gives no URL preview, so ask first. Otherwise open immediately
+            // (must be synchronous with the click to avoid popup blockers).
             // Close animation plays concurrently on the main tab.
-            window.open(item.link, '_blank', 'noopener,noreferrer');
+            if (needsLinkConfirm(event)) confirmLink(item.link, item.linkPrompt);
+            else window.open(item.link, '_blank', 'noopener,noreferrer');
             this.closeOpenItem();
             return;
         }

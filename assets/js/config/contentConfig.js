@@ -418,6 +418,8 @@ export const bookConfigs = {
             id: 'blog',
             color: colors.green,
             link: 'https://the.btw.so',
+            linkPrompt: 'Read the blog at the.btw.so?',
+            hoverLabel: 'Blog · the.btw.so',
             // Stands just inboard of the leftmost support under the shelf above,
             // tipped toward it so its top edge comes to rest against it.
             placement: {

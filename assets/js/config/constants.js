@@ -232,6 +232,15 @@ export const NAV_HINTS = {
   ACCENT:      '#f0c060', // highlighted mouse button + key terms
 };
 
+// Prompt shown before an outbound link opens on a touch device
+export const LINK_CONFIRM = {
+  BACKDROP: 'rgba(0,0,0,0.35)',
+  BG:       'rgba(15,15,20,0.88)',
+  BG_SOLID: '#0f0f14', // Go button label
+  TEXT:     '#e8e4dc',
+  ACCENT:   '#f0c060', // Go button fill
+};
+
 // Camera settings
 export const CAMERA_SETTINGS = {
   FOV:  10,
@@ -400,6 +409,12 @@ export const BLOG_NOTEBOOK_DEFAULTS = {
   // Hover animation
   HOVER_Z_OFFSET: 1,    // inches forward when hovered
   HOVER_DURATION: 0.3,  // seconds
+
+  // Hover label naming the external site
+  LABEL_GAP_PX: 10,                     // space between the notebook's screen bounds and the label
+  LABEL_BG:     'rgba(15,15,20,0.82)',
+  LABEL_TEXT:   '#e8e4dc',
+  LABEL_ACCENT: '#f0c060',              // the ↗ external-link arrow
 };
 
 // BusinessCard default properties
